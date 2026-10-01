@@ -11,9 +11,10 @@ export interface CardConfig {
   textColor: string;
   accentColor: string;
   borderWidth: number;
-  projectName: string;
+  prettyName: string;
   description: string;
   borderRadius: number;
+  coverImage?: string;
   orientation: "landscape" | "portrait" | "custom";
   status: "" | "Active" | "WIP" | "Archived" | "Deprecated";
 }
@@ -25,7 +26,7 @@ export const CARD_SIZES = {
 
 export const DEFAULT_CONFIG: CardConfig = {
   size: CARD_SIZES.landscape,
-  projectName: "Example Project",
+  prettyName: "Example Project",
   tagline: "A short, punchy subtitle",
   description:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis urna sit amet lorem ullamcorper porttitor. Ut tempor semper euismod. Integer ornare risus eget erat.",

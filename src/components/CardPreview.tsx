@@ -27,6 +27,7 @@ export function CardContent({ config, forExport = false }: Props) {
   return (
     <div
       style={{
+        gap: 12,
         width: w,
         height: h,
         padding: 24,
@@ -42,6 +43,30 @@ export function CardContent({ config, forExport = false }: Props) {
         ...(forExport ? {} : {}),
       }}
     >
+      {config.coverImage && (
+        <div
+          style={{
+            marginTop: -24,
+            marginLeft: -24,
+            marginRight: -24,
+            overflow: "hidden",
+            height: Math.round(h * 0.2),
+            minHeight: Math.round(h * 0.2),
+          }}
+        >
+          <img
+            src={config.coverImage}
+            alt=""
+            style={{
+              width: "100%",
+              height: "100%",
+              display: "block",
+              objectFit: "cover",
+            }}
+          />
+        </div>
+      )}
+
       <div
         style={{
           display: "flex",
@@ -52,12 +77,11 @@ export function CardContent({ config, forExport = false }: Props) {
         {config.status && (
           <span
             style={{
-              fontSize: 13,
+              fontSize: 11,
               fontWeight: 600,
               borderRadius: 100,
               color: statusColor,
-              padding: "4px 12px",
-              letterSpacing: "0.06em",
+              padding: "4px 12px 2px 12px",
               textTransform: "uppercase",
               backgroundColor: statusColor + "22",
             }}
@@ -69,24 +93,24 @@ export function CardContent({ config, forExport = false }: Props) {
 
       <div
         style={{
-          gap: 14,
+          gap: 8,
           flex: 1,
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
         }}
       >
-        {config.projectName && (
+        {config.prettyName && (
           <h1
             style={{
               margin: 0,
-              fontSize: 60,
+              fontSize: 48,
               fontWeight: 700,
               lineHeight: 1.05,
               letterSpacing: "-0.02em",
             }}
           >
-            {config.projectName}
+            {config.prettyName}
           </h1>
         )}
 
@@ -94,10 +118,10 @@ export function CardContent({ config, forExport = false }: Props) {
           <p
             style={{
               margin: 0,
-              fontSize: 22,
+              fontSize: 18,
               fontWeight: 500,
               lineHeight: 1.4,
-              marginBottom: 16,
+              marginBottom: 2,
               color: config.accentColor,
             }}
           >
@@ -174,15 +198,19 @@ export function CardContent({ config, forExport = false }: Props) {
 // Scaled preview wrapper
 export function CardPreview({ config }: { config: CardConfig }) {
   const { w: width, h: height } = config.size;
+
   const wrapperRef = useRef<HTMLDivElement>(null);
+
   const [scale, setScale] = useState(1);
 
   useEffect(() => {
     const el = wrapperRef.current;
     if (!el) return;
+
     const ro = new ResizeObserver(([entry]) => {
       setScale(Math.min(1, entry.contentRect.width / width));
     });
+
     ro.observe(el);
     return () => ro.disconnect();
   }, [width]);
@@ -192,10 +220,10 @@ export function CardPreview({ config }: { config: CardConfig }) {
       ref={wrapperRef}
       style={{
         width: "100%",
-        height: height * scale,
         borderRadius: 4,
         overflow: "hidden",
         position: "relative",
+        height: height * scale,
       }}
     >
       <div
