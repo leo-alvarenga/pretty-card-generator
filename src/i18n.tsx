@@ -34,6 +34,9 @@ const en = {
   phTechStack: "React, TypeScript, Vite",
   phGithub: "github.com/you/project",
   phAuthor: "your-username",
+  fieldCoverImage: "Cover Image",
+  coverImageUpload: "Click to upload",
+  coverImageRemove: "Remove",
 };
 
 const pt: typeof en = {
@@ -69,6 +72,9 @@ const pt: typeof en = {
   phTechStack: "React, TypeScript, Vite",
   phGithub: "github.com/você/projeto",
   phAuthor: "seu-usuário",
+  fieldCoverImage: "Imagem de Capa",
+  coverImageUpload: "Clique para enviar",
+  coverImageRemove: "Remover",
 };
 
 const translations = { en, pt } as const;
