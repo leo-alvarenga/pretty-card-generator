@@ -1,5 +1,11 @@
 import { useRef, useState, useEffect } from "react";
-import { Download, Loader, SlidersHorizontal, SquareText } from "lucide-react";
+import {
+  Download,
+  Info,
+  Loader,
+  SlidersHorizontal,
+  SquareText,
+} from "lucide-react";
 
 import { DEFAULT_CONFIG, downloadPng, loadFont } from "./lib";
 import type { CardConfig } from "./types";
@@ -7,6 +13,7 @@ import { useT, type Locale } from "./i18n";
 import { Button } from "@/components/ui/button";
 import { FormPanel } from "./components/FormPanel";
 import { CardContent, CardPreview } from "./components/CardPreview";
+import { WelcomeModal } from "./components/WelcomeModal";
 
 export default function App() {
   const [config, setConfig] = useState<CardConfig>(DEFAULT_CONFIG);
@@ -14,6 +21,14 @@ export default function App() {
   const exportRef = useRef<HTMLDivElement>(null);
   const [exporting, setExporting] = useState(false);
   const [panelOpen, setPanelOpen] = useState(false);
+  const [welcomeOpen, setWelcomeOpen] = useState(
+    () => !localStorage.getItem("seen-welcome"),
+  );
+
+  const closeWelcome = () => {
+    localStorage.setItem("seen-welcome", "1");
+    setWelcomeOpen(false);
+  };
   const { t, locale, setLocale } = useT();
 
   const patch = (p: Partial<CardConfig>) => setConfig((c) => ({ ...c, ...p }));
@@ -56,6 +71,18 @@ export default function App() {
           <span className="text-sm font-semibold tracking-tight">
             {t("appTitle")}
           </span>
+
+          <span className="text-sm tracking-tight inline-flex items-center gap-1 italic">
+            <span className="text-muted-foreground">{t("by")}</span>
+
+            <a
+              href="https://leoalvarenga.dev"
+              target="_blank"
+              className="text-muted-foreground underline transition-colors duration-300 hover:text-primary"
+            >
+              Leo Alvarenga
+            </a>
+          </span>
         </div>
 
         <div className="flex items-center gap-2">
@@ -65,6 +92,14 @@ export default function App() {
             className="lg:hidden p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
           >
             <SlidersHorizontal className="w-4 h-4" />
+          </button>
+
+          <button
+            onClick={() => setWelcomeOpen(true)}
+            aria-label="About"
+            className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+          >
+            <Info className="w-4 h-4" />
           </button>
 
           <div className="flex text-xs font-medium rounded-md border border-border overflow-hidden">
@@ -133,6 +168,8 @@ export default function App() {
           <CardContent config={config} forExport />
         </div>
       </div>
+
+      <WelcomeModal open={welcomeOpen} onClose={closeWelcome} />
     </div>
   );
 }

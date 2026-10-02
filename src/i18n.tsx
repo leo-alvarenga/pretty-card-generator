@@ -2,7 +2,8 @@ import { createContext, useContext, useState } from "react";
 import type { ReactNode } from "react";
 
 const en = {
-  appTitle: "Card Generator",
+  by: "by",
+  appTitle: "Pretty Card Generator",
   togglePanel: "Toggle panel",
   export: "Export",
   exporting: "Exporting…",
@@ -51,10 +52,27 @@ const en = {
   bgPatternOrganic: "Organic",
   bgPatternCanvas: "Canvas",
   bgPatternWaves: "Waves",
+  welcomeTitle: "Welcome to Pretty Card Generator",
+  welcomeDesc:
+    "Create beautiful, exportable cards to use in your portfolio, GitHub profile, or presentations; no design skills needed!",
+  welcomeHowWorksTitle: "How it works",
+  welcomeHowWorksDesc:
+    "Open the side panel, fill in your project details, tweak the appearance, and hit Export to download a pixel-perfect PNG.",
+  welcomeFeaturesTitle: "Features",
+  welcomeFeature1: "Templates and orientations (landscape, portrait, custom)",
+  welcomeFeature2: "Custom colors, fonts, and border styles",
+  welcomeFeature3: "Background patterns: Cyberpunk, Organic, Canvas, Waves",
+  welcomeFeature4: "Tech stack badges and project status tags",
+  welcomeFeature5: "Cover image support",
+  welcomeFeature6: "Export as high-quality PNG",
+  welcomeFeature7: "EN / PT localization",
+  welcomeGetStarted: "Get started",
+  welcomeMadeBy: "Made by",
 };
 
 const pt: typeof en = {
-  appTitle: "Gerador de Cartões",
+  by: "por",
+  appTitle: "Pretty Card Generator",
   togglePanel: "Alternar painel",
   export: "Exportar",
   exporting: "Exportando…",
@@ -103,6 +121,22 @@ const pt: typeof en = {
   bgPatternOrganic: "Orgânico",
   bgPatternCanvas: "Tela",
   bgPatternWaves: "Ondas",
+  welcomeTitle: "Bem-vindo ao Pretty Card Generator",
+  welcomeDesc:
+    "Crie cards bonitos e exportáveis para usar no seu portfólio, perfil do GitHub ou apresentações; sem precisar de habilidades de design!",
+  welcomeHowWorksTitle: "Como funciona",
+  welcomeHowWorksDesc:
+    "Abra o painel lateral, preencha os detalhes do seu projeto, ajuste a aparência e clique em Exportar para baixar um PNG perfeito.",
+  welcomeFeaturesTitle: "Recursos",
+  welcomeFeature1: "Templates e orientações (paisagem, retrato, personalizado)",
+  welcomeFeature2: "Cores, fontes e estilos de borda personalizados",
+  welcomeFeature3: "Padrões de fundo: Cyberpunk, Orgânico, Tela, Ondas",
+  welcomeFeature4: "Badges de stack tecnológica e tags de status do projeto",
+  welcomeFeature5: "Suporte a imagem de capa",
+  welcomeFeature6: "Download como PNG de alta qualidade",
+  welcomeFeature7: "Localização EN / PT",
+  welcomeGetStarted: "Vamos lá",
+  welcomeMadeBy: "Feito por",
 };
 
 const translations = { en, pt } as const;
@@ -115,11 +149,24 @@ type Ctx = {
   t: (k: TKey) => string;
 };
 
+function detectLocale(): Locale {
+  const supported = Object.keys(translations) as Locale[];
+  const langs = Array.from(
+    navigator.languages?.length ? navigator.languages : [navigator.language],
+  );
+  for (const lang of langs) {
+    if (supported.includes(lang as Locale)) return lang as Locale;
+    const base = lang.split("-")[0] as Locale;
+    if (supported.includes(base)) return base;
+  }
+  return "en";
+}
+
 const I18nCtx = createContext<Ctx>(null!);
 
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(
-    () => (localStorage.getItem("locale") as Locale | null) ?? "en",
+    () => (localStorage.getItem("locale") as Locale | null) ?? detectLocale(),
   );
 
   const setLocale = (l: Locale) => {
