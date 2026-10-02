@@ -97,12 +97,14 @@
 
 .canvas-bg {
   background-color: color-mix(in srgb, var(--ui-bg) 80%, black);
+
   background-image: radial-gradient(
     circle,
-    color-mix(in srgb, var(--ui-text) 7%, transparent) 1px,
+    color-mix(in srgb, var(--ui-text) 20%, transparent) 2px,
     transparent 1px
   );
-  background-size: 24px 24px;
+
+  background-size: 36px 36px;
 }
 
 ::-webkit-scrollbar {

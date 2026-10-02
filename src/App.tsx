@@ -1,10 +1,8 @@
 import { useRef, useState, useEffect } from "react";
 import { Download, Loader, SlidersHorizontal, SquareText } from "lucide-react";
 
-import { loadFont } from "./lib/fonts";
-import { DEFAULT_CONFIG } from "./types";
+import { DEFAULT_CONFIG, downloadPng, loadFont } from "./lib";
 import type { CardConfig } from "./types";
-import { downloadPng } from "./lib/export";
 import { useT, type Locale } from "./i18n";
 import { Button } from "@/components/ui/button";
 import { FormPanel } from "./components/FormPanel";
