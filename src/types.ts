@@ -1,5 +1,6 @@
 export type CardSize = { w: number; h: number };
 
+export type BgPattern = "none" | "cyberpunk" | "organic" | "canvas" | "waves";
 export interface CardConfig {
   font: string;
   author: string;
@@ -17,4 +18,5 @@ export interface CardConfig {
   coverImage?: string;
   orientation: "landscape" | "portrait" | "custom";
   status: "" | "Active" | "WIP" | "Archived" | "Deprecated";
+  bgPattern: BgPattern;
 }

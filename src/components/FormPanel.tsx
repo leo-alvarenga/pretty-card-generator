@@ -1,12 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 
-import { type CardConfig, type CardSize } from "../types";
+import { type BgPattern, type CardConfig, type CardSize } from "../types";
 import { ColorPicker } from "./ColorPicker";
-import { useT } from "../i18n";
+import { useT, type TKey } from "../i18n";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Slider } from "@/components/ui/slider";
 
 import { CARD_SIZES, FONTS, TEMPLATES } from "@/lib";
 
@@ -33,8 +41,23 @@ function Field({
   );
 }
 
-const selectCls =
-  "h-8 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm text-foreground transition-colors outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 cursor-pointer";
+// Labels are resolved through these maps (not through mounted <SelectItem>s), so the
+// trigger shows a translated label before the popup has ever been opened
+const PATTERN_LABELS: Record<BgPattern, TKey> = {
+  none: "bgPatternNone",
+  waves: "bgPatternWaves",
+  canvas: "bgPatternCanvas",
+  organic: "bgPatternOrganic",
+  cyberpunk: "bgPatternCyberpunk",
+};
+
+const STATUS_LABELS: Record<CardConfig["status"], TKey> = {
+  "": "statusNone",
+  WIP: "statusWip",
+  Active: "statusActive",
+  Archived: "statusArchived",
+  Deprecated: "statusDeprecated",
+};
 
 export function FormPanel({ config, onChange }: Props) {
   const { t } = useT();
@@ -79,7 +102,7 @@ export function FormPanel({ config, onChange }: Props) {
     <div className="flex flex-col gap-0 h-full">
       <section className="flex flex-col gap-4 p-5">
         <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">
-          Content
+          {t("sectionContent")}
         </p>
 
         <Field label={t("fieldTemplate")}>
@@ -104,12 +127,12 @@ export function FormPanel({ config, onChange }: Props) {
           <div className="flex flex-col gap-2">
             {config.coverImage ? (
               <div
-                className="relative rounded overflow-hidden"
                 style={{ height: 80 }}
+                className="relative rounded overflow-hidden"
               >
                 <img
-                  src={config.coverImage}
                   alt=""
+                  src={config.coverImage}
                   className="w-full h-full object-cover"
                 />
 
@@ -183,19 +206,25 @@ export function FormPanel({ config, onChange }: Props) {
         </Field>
 
         <Field label={t("fieldStatus")}>
-          <select
-            className={selectCls}
+          <Select
             value={config.status}
-            onChange={(e) =>
-              set("status")(e.target.value as CardConfig["status"])
-            }
+            onValueChange={(v) => set("status")(v ?? "")}
           >
-            <option value="">{t("statusNone")}</option>
-            <option>Active</option>
-            <option>WIP</option>
-            <option>Archived</option>
-            <option>Deprecated</option>
-          </select>
+            <SelectTrigger className="w-full">
+              <SelectValue>
+                {(v) => t(STATUS_LABELS[v as CardConfig["status"]])}
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent>
+              {(Object.keys(STATUS_LABELS) as CardConfig["status"][]).map(
+                (s) => (
+                  <SelectItem key={s} value={s}>
+                    {t(STATUS_LABELS[s])}
+                  </SelectItem>
+                ),
+              )}
+            </SelectContent>
+          </Select>
         </Field>
 
         <Field label={t("fieldGithubUrl")}>
@@ -219,7 +248,7 @@ export function FormPanel({ config, onChange }: Props) {
 
       <section className="flex flex-col gap-4 p-5">
         <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">
-          Appearance
+          {t("sectionAppearance")}
         </p>
 
         <Field label={t("fieldColors")}>
@@ -242,16 +271,42 @@ export function FormPanel({ config, onChange }: Props) {
           </div>
         </Field>
 
-        <Field label={t("fieldFont")}>
-          <select
-            value={config.font}
-            className={selectCls}
-            onChange={(e) => set("font")(e.target.value)}
+        <Field label={t("fieldBgPattern")}>
+          <Select
+            value={config.bgPattern}
+            onValueChange={(v) => set("bgPattern")(v ?? "none")}
           >
-            {FONTS.map((f) => (
-              <option key={f}>{f}</option>
-            ))}
-          </select>
+            <SelectTrigger className="w-full">
+              <SelectValue>
+                {(v) => t(PATTERN_LABELS[v as BgPattern])}
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent>
+              {(Object.keys(PATTERN_LABELS) as BgPattern[]).map((p) => (
+                <SelectItem key={p} value={p}>
+                  {t(PATTERN_LABELS[p])}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </Field>
+
+        <Field label={t("fieldFont")}>
+          <Select
+            value={config.font}
+            onValueChange={(v) => set("font")(v ?? "")}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {FONTS.map((f) => (
+                <SelectItem key={f} value={f}>
+                  {f}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </Field>
       </section>
 
@@ -259,7 +314,7 @@ export function FormPanel({ config, onChange }: Props) {
 
       <section className="flex flex-col gap-4 p-5 pb-8">
         <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">
-          Layout
+          {t("sectionLayout")}
         </p>
 
         <Field label={t("fieldOrientation")}>
@@ -312,24 +367,26 @@ export function FormPanel({ config, onChange }: Props) {
         )}
 
         <Field label={`${t("fieldBorderWidth")}: ${config.borderWidth}px`}>
-          <input
+          <Slider
             min={0}
             max={8}
-            type="range"
-            value={config.borderWidth}
-            onChange={(e) => set("borderWidth")(Number(e.target.value))}
-            className="w-full h-1.5 rounded-full appearance-none cursor-pointer bg-border [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary"
+            step={1}
+            value={[config.borderWidth]}
+            onValueChange={(v) =>
+              set("borderWidth")(Array.isArray(v) ? v[0] : v)
+            }
           />
         </Field>
 
         <Field label={`${t("fieldBorderRadius")}: ${config.borderRadius}px`}>
-          <input
-            type="range"
+          <Slider
             min={0}
             max={24}
-            value={config.borderRadius}
-            onChange={(e) => set("borderRadius")(Number(e.target.value))}
-            className="w-full h-1.5 rounded-full appearance-none cursor-pointer bg-border [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary"
+            step={1}
+            value={[config.borderRadius]}
+            onValueChange={(v) =>
+              set("borderRadius")(Array.isArray(v) ? v[0] : v)
+            }
           />
         </Field>
       </section>

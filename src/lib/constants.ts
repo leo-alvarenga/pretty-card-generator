@@ -23,6 +23,7 @@ export const TEMPLATES: Record<string, CardConfig> = {
     font: "Inter",
     borderWidth: 2,
     borderRadius: 8,
+    bgPattern: "none",
   },
   "Github Profile Readme Banner": {
     status: "",
@@ -34,6 +35,7 @@ export const TEMPLATES: Record<string, CardConfig> = {
     font: "Inter",
     borderWidth: 4,
     borderRadius: 16,
+    bgPattern: "none",
     bgColor: "#0d1117",
     textColor: "#e6edf3",
     orientation: "custom",
@@ -65,4 +67,5 @@ export const DEFAULT_CONFIG: CardConfig = {
   font: "Inter",
   borderWidth: 2,
   borderRadius: 8,
+  bgPattern: "cyberpunk",
 };

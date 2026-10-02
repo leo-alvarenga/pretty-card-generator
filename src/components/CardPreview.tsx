@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { type CardConfig } from "../types";
 import { fontFamily } from "../lib/fonts";
+import { bgPatternStyle } from "../lib/patterns";
 
 const STATUS_COLORS: Record<string, string> = {
   WIP: "#d29922",
@@ -37,6 +38,11 @@ export function CardContent({ config, forExport = false }: Props) {
         flexDirection: "column",
         color: config.textColor,
         backgroundColor: config.bgColor,
+        ...bgPatternStyle(
+          config.bgPattern,
+          config.accentColor,
+          config.textColor,
+        ),
         borderRadius: config.borderRadius,
         fontFamily: fontFamily(config.font),
         border: `${config.borderWidth}px solid ${config.accentColor}`,

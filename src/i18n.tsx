@@ -38,6 +38,19 @@ const en = {
   fieldCoverImage: "Cover Image",
   coverImageUpload: "Click to upload",
   coverImageRemove: "Remove",
+  sectionContent: "Content",
+  sectionAppearance: "Appearance",
+  sectionLayout: "Layout",
+  statusActive: "Active",
+  statusWip: "WIP",
+  statusArchived: "Archived",
+  statusDeprecated: "Deprecated",
+  fieldBgPattern: "Background pattern",
+  bgPatternNone: "None",
+  bgPatternCyberpunk: "Cyberpunk",
+  bgPatternOrganic: "Organic",
+  bgPatternCanvas: "Canvas",
+  bgPatternWaves: "Waves",
 };
 
 const pt: typeof en = {
@@ -77,6 +90,19 @@ const pt: typeof en = {
   fieldCoverImage: "Imagem de Capa",
   coverImageUpload: "Clique para enviar",
   coverImageRemove: "Remover",
+  sectionContent: "Conteúdo",
+  sectionAppearance: "Aparência",
+  sectionLayout: "Layout",
+  statusActive: "Ativo",
+  statusWip: "Em andamento",
+  statusArchived: "Arquivado",
+  statusDeprecated: "Descontinuado",
+  fieldBgPattern: "Padrão de fundo",
+  bgPatternNone: "Nenhum",
+  bgPatternCyberpunk: "Cyberpunk",
+  bgPatternOrganic: "Orgânico",
+  bgPatternCanvas: "Tela",
+  bgPatternWaves: "Ondas",
 };
 
 const translations = { en, pt } as const;
