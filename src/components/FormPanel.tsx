@@ -111,11 +111,16 @@ export function FormPanel({ config, onChange }: Props) {
               <button
                 key={o}
                 onClick={() => onTemplateChange(o)}
-                className={`flex-1 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
-                  template === o
-                    ? "bg-primary/20 border-primary text-primary"
-                    : "bg-transparent border-border text-muted-foreground hover:border-ring hover:text-foreground"
-                }`}
+                className={`
+                  flex-1 py-1.5 rounded-lg
+                  text-xs font-medium border
+                  transition-colors min-w-[40%]
+                  h-16 overflow-hidden text-ellipsis
+                  ${
+                    template === o
+                      ? "bg-primary/20 border-primary text-primary"
+                      : "bg-transparent border-border text-muted-foreground hover:border-ring hover:text-foreground"
+                  }`}
               >
                 {o}
               </button>
