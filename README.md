@@ -1,32 +1,34 @@
-# React + TypeScript + Vite
+# Pretty Card Generator
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+You have a cool project. Describing it is the hard part. Pretty Card Generator
+makes it a bit easier — fill in the details, pick a look, and download a
+ready-to-share PNG in under a minute.
 
-Currently, two official plugins are available:
+No design skills required.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## What it does
 
-## React Compiler
+You get a side panel with fields (title, tagline, description, tech stack,
+status, GitHub URL, author, cover image) and a live preview on the right.
+Tweak colors, fonts, border styles, background patterns, and orientation until
+it looks right, then hit **Export** to download a high-quality PNG you can
+drop into your portfolio, GitHub profile README, or slide deck.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Why it exists
 
-## Expanding the Oxlint configuration
+Most project screenshots look like... screenshots. I wanted something that
+actually looks intentional — a card format that presents a project cleanly
+without having to open Figma or fight with a template.
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+## Running locally
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```sh
+pnpm install
+pnpm dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Stack
+
+React 19 · TypeScript · Vite · Tailwind CSS · shadcn/ui · html-to-image
+
+Available in **English** and **Portuguese** — auto-detected from your browser.

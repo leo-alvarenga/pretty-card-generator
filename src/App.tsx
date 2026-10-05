@@ -18,9 +18,11 @@ import { WelcomeModal } from "./components/WelcomeModal";
 export default function App() {
   const [config, setConfig] = useState<CardConfig>(DEFAULT_CONFIG);
 
+  const { t, locale, setLocale } = useT();
   const exportRef = useRef<HTMLDivElement>(null);
   const [exporting, setExporting] = useState(false);
   const [panelOpen, setPanelOpen] = useState(false);
+
   const [welcomeOpen, setWelcomeOpen] = useState(
     () => !localStorage.getItem("seen-welcome"),
   );
@@ -29,7 +31,6 @@ export default function App() {
     localStorage.setItem("seen-welcome", "1");
     setWelcomeOpen(false);
   };
-  const { t, locale, setLocale } = useT();
 
   const patch = (p: Partial<CardConfig>) => setConfig((c) => ({ ...c, ...p }));
 
@@ -107,7 +108,7 @@ export default function App() {
               <button
                 key={l}
                 onClick={() => setLocale(l)}
-                className={`px-2.5 py-1 transition-colors ${
+                className={`px-4 h-8 py-1 transition-colors ${
                   locale === l
                     ? "bg-primary text-primary-foreground"
                     : "text-muted-foreground hover:text-foreground hover:bg-muted"
@@ -120,7 +121,7 @@ export default function App() {
 
           <Button
             size="sm"
-            className="gap-1.5"
+            className="gap-1.5 h-8"
             disabled={exporting}
             onClick={handleDownload}
           >
@@ -145,7 +146,12 @@ export default function App() {
             panelOpen ? "block" : "hidden"
           } lg:block`}
         >
-          <FormPanel config={config} onChange={patch} />
+          <FormPanel
+            config={config}
+            onChange={patch}
+            exporting={exporting}
+            onDownload={handleDownload}
+          />
         </aside>
 
         <main className="flex-1 flex items-center justify-center p-8 overflow-auto canvas-bg">

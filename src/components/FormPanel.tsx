@@ -17,9 +17,13 @@ import {
 import { Slider } from "@/components/ui/slider";
 
 import { CARD_SIZES, FONTS, TEMPLATES } from "@/lib";
+import { Button } from "./ui/button";
+import { Download, Loader } from "lucide-react";
 
 interface Props {
   config: CardConfig;
+  exporting: boolean;
+  onDownload: () => Promise<void>;
   onChange: (patch: Partial<CardConfig>) => void;
 }
 
@@ -59,7 +63,7 @@ const STATUS_LABELS: Record<CardConfig["status"], TKey> = {
   Deprecated: "statusDeprecated",
 };
 
-export function FormPanel({ config, onChange }: Props) {
+export function FormPanel({ config, exporting, onDownload, onChange }: Props) {
   const { t } = useT();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -100,7 +104,7 @@ export function FormPanel({ config, onChange }: Props) {
 
   return (
     <div className="flex flex-col gap-0 h-full">
-      <section className="flex flex-col gap-4 p-5">
+      <section className="flex flex-col gap-4 p-4">
         <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">
           {t("sectionContent")}
         </p>
@@ -251,7 +255,7 @@ export function FormPanel({ config, onChange }: Props) {
 
       <Separator />
 
-      <section className="flex flex-col gap-4 p-5">
+      <section className="flex flex-col gap-4 p-4">
         <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">
           {t("sectionAppearance")}
         </p>
@@ -317,7 +321,7 @@ export function FormPanel({ config, onChange }: Props) {
 
       <Separator />
 
-      <section className="flex flex-col gap-4 p-5 pb-8">
+      <section className="flex flex-col gap-4 p-4 pb-8">
         <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">
           {t("sectionLayout")}
         </p>
@@ -394,6 +398,29 @@ export function FormPanel({ config, onChange }: Props) {
             }
           />
         </Field>
+      </section>
+
+      <Separator />
+
+      <section className="flex flex-col gap-4 p-4">
+        <Button
+          size="lg"
+          disabled={exporting}
+          onClick={onDownload}
+          className="gap-1.5 h-8"
+        >
+          {exporting ? (
+            <>
+              <Loader className="w-4 h-4 animate-spin" />
+              {t("exporting")}
+            </>
+          ) : (
+            <>
+              <Download className="w-4 h-4" />
+              {t("export")}
+            </>
+          )}
+        </Button>
       </section>
     </div>
   );
