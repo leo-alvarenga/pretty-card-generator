@@ -214,6 +214,16 @@ export function FormPanel({ config, exporting, onDownload, onChange }: Props) {
           />
         </Field>
 
+        <Field label={`${t("fieldTextGap")}: ${config.textGap}px`}>
+          <Slider
+            min={0}
+            max={48}
+            step={1}
+            value={[config.textGap]}
+            onValueChange={(v) => set("textGap")(Array.isArray(v) ? v[0] : v)}
+          />
+        </Field>
+
         <Field label={t("fieldStatus")}>
           <Select
             value={config.status}

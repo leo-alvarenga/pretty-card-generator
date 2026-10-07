@@ -7,6 +7,7 @@ export const CARD_SIZES = {
 
 export const TEMPLATES: Record<string, CardConfig> = {
   "Project Card": {
+    textGap: 8,
     size: CARD_SIZES.landscape,
     prettyName: "Example Project",
     tagline: "A short, punchy subtitle",
@@ -32,6 +33,7 @@ export const TEMPLATES: Record<string, CardConfig> = {
     techStack: "",
     description: "",
 
+    textGap: 8,
     font: "Inter",
     borderWidth: 4,
     borderRadius: 16,
@@ -49,10 +51,12 @@ export const TEMPLATES: Record<string, CardConfig> = {
     },
   },
   "Open Source Library": {
+    textGap: 8,
     size: CARD_SIZES.landscape,
     prettyName: "my-awesome-lib",
     tagline: "Zero-dependency, tree-shakeable utility library",
-    description: "A lightweight library that does one thing and does it well. Works in Node, Deno, and the browser.",
+    description:
+      "A lightweight library that does one thing and does it well. Works in Node, Deno, and the browser.",
     techStack: "TypeScript, Rollup, Vitest",
     status: "Active",
     githubUrl: "https://github.com/leo-alvarenga",
@@ -67,10 +71,12 @@ export const TEMPLATES: Record<string, CardConfig> = {
     bgPattern: "waves",
   },
   "Portfolio Piece": {
+    textGap: 8,
     size: CARD_SIZES.portrait,
     prettyName: "My Portfolio Project",
     tagline: "Built to learn, shipped to impress",
-    description: "A full-stack web app showcasing modern React patterns, type-safe APIs, and CI/CD pipelines deployed on Vercel.",
+    description:
+      "A full-stack web app showcasing modern React patterns, type-safe APIs, and CI/CD pipelines deployed on Vercel.",
     techStack: "Next.js, tRPC, Prisma",
     status: "Active",
     githubUrl: "https://github.com/leo-alvarenga",
@@ -85,10 +91,12 @@ export const TEMPLATES: Record<string, CardConfig> = {
     bgPattern: "organic",
   },
   "CLI Tool": {
+    textGap: 8,
     size: CARD_SIZES.landscape,
     prettyName: "my-cli",
     tagline: "$ do-the-thing --fast --no-regrets",
-    description: "A fast, opinionated CLI that automates the boring parts of your workflow. Install once, save hours weekly.",
+    description:
+      "A fast, opinionated CLI that automates the boring parts of your workflow. Install once, save hours weekly.",
     techStack: "Go, Cobra, Bubble Tea",
     status: "Active",
     githubUrl: "https://github.com/leo-alvarenga",
@@ -103,10 +111,12 @@ export const TEMPLATES: Record<string, CardConfig> = {
     bgPattern: "cyberpunk",
   },
   "WIP / Hackathon": {
+    textGap: 8,
     size: CARD_SIZES.landscape,
     prettyName: "Project Codename",
     tagline: "48 hours to ship something that matters",
-    description: "Hackathon project. Rough edges expected. The idea is solid, the deadline is not.",
+    description:
+      "Hackathon project. Rough edges expected. The idea is solid, the deadline is not.",
     techStack: "TBD",
     status: "WIP",
     githubUrl: "https://github.com/leo-alvarenga",
@@ -120,24 +130,4 @@ export const TEMPLATES: Record<string, CardConfig> = {
     borderRadius: 8,
     bgPattern: "canvas",
   },
-};
-
-export const DEFAULT_CONFIG: CardConfig = {
-  size: CARD_SIZES.landscape,
-  prettyName: "Example Project",
-  tagline: "A short, punchy subtitle",
-  description:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis urna sit amet lorem ullamcorper porttitor. Ut tempor semper euismod. Integer ornare risus eget erat.",
-  techStack: "React, TypeScript, Vite",
-  status: "Active",
-  githubUrl: "https://github.com/leo-alvarenga",
-  author: "leo-alvarenga",
-  orientation: "landscape",
-  bgColor: "#0d1117",
-  textColor: "#e6edf3",
-  accentColor: "#58a6ff",
-  font: "Inter",
-  borderWidth: 2,
-  borderRadius: 8,
-  bgPattern: "cyberpunk",
 };

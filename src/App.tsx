@@ -7,7 +7,7 @@ import {
   SquareText,
 } from "lucide-react";
 
-import { DEFAULT_CONFIG, downloadPng, loadFont } from "./lib";
+import { TEMPLATES, downloadPng, loadFont } from "./lib";
 import type { CardConfig } from "./types";
 import { useT, type Locale } from "./i18n";
 import { Button } from "@/components/ui/button";
@@ -16,7 +16,7 @@ import { CardContent, CardPreview } from "./components/CardPreview";
 import { WelcomeModal } from "./components/WelcomeModal";
 
 export default function App() {
-  const [config, setConfig] = useState<CardConfig>(DEFAULT_CONFIG);
+  const [config, setConfig] = useState<CardConfig>(TEMPLATES["Project Card"]);
 
   const { t, locale, setLocale } = useT();
   const exportRef = useRef<HTMLDivElement>(null);

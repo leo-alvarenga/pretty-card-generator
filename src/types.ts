@@ -5,6 +5,7 @@ export interface CardConfig {
   font: string;
   author: string;
   size: CardSize;
+  textGap: number;
   tagline: string;
   bgColor: string;
   techStack: string;

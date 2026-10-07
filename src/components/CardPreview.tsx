@@ -99,9 +99,9 @@ export function CardContent({ config, forExport = false }: Props) {
 
       <div
         style={{
-          gap: 8,
           flex: 1,
           display: "flex",
+          gap: config.textGap,
           flexDirection: "column",
           justifyContent: "center",
         }}
@@ -144,7 +144,7 @@ export function CardContent({ config, forExport = false }: Props) {
               lineHeight: 1.65,
               overflow: "hidden",
               whiteSpace: "pre-wrap",
-              wordBreak: "break-all",
+              wordBreak: "auto-phrase",
             }}
           >
             {config.description}
